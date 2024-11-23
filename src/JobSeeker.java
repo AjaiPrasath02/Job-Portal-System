@@ -1,17 +1,22 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class JobSeeker extends User {
+public class JobSeeker extends User implements JobSeekerActions {
     private String resumePath;
     private List<Job> appliedJobs;
+    private List<String> skills; // New field for skills
+    private String preferredLocation; // New field for preferred location
 
     // Constructor
     public JobSeeker(String username, String password, String email, String resumePath) {
         super(username, password, email);
         this.resumePath = resumePath;
         this.appliedJobs = new ArrayList<>();
+        this.skills = new ArrayList<>();
+        this.preferredLocation = "";
     }
 
+    // Getters and Setters
     public String getResumePath() {
         return resumePath;
     }
@@ -20,7 +25,24 @@ public class JobSeeker extends User {
         this.resumePath = resumePath;
     }
 
+    public List<String> getSkills() {
+        return skills;
+    }
+
+    public void addSkill(String skill) {
+        skills.add(skill.trim());
+    }
+
+    public String getPreferredLocation() {
+        return preferredLocation;
+    }
+
+    public void setPreferredLocation(String preferredLocation) {
+        this.preferredLocation = preferredLocation;
+    }
+
     // Search jobs
+    @Override
     public void searchJobs(String keyword, List<Job> jobs) {
         System.out.println("Jobs matching keyword '" + keyword + "':");
         boolean found = false;
@@ -37,6 +59,7 @@ public class JobSeeker extends User {
     }
 
     // Apply for a job
+    @Override
     public void applyForJob(Job job) {
         if (!appliedJobs.contains(job)) {
             appliedJobs.add(job);
@@ -61,5 +84,7 @@ public class JobSeeker extends User {
     @Override
     public void displayUserDetails() {
         System.out.println("Job Seeker: " + getUsername() + ", Email: " + getEmail());
+        System.out.println("Skills: " + skills);
+        System.out.println("Preferred Location: " + preferredLocation);
     }
 }

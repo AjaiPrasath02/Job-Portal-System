@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Employer extends User {
+public class Employer extends User implements EmployerActions{
     private List<Job> jobPostings;
 
     // Constructor

@@ -28,38 +28,61 @@ public class Main {
 
             JobSeeker jobSeeker = new JobSeeker(username, password, email, resumePath);
 
+            // Add skills and preferred location
+            System.out.println("Enter skills (comma-separated): ");
+            String skillsInput = scanner.nextLine();
+            String[] skills = skillsInput.split(",");
+            for (String skill : skills) {
+                jobSeeker.addSkill(skill.trim());
+            }
+
+            System.out.println("Enter preferred job location: ");
+            String location = scanner.nextLine();
+            jobSeeker.setPreferredLocation(location);
+
             while (true) {
-                System.out.println("1. Search Jobs");
-                System.out.println("2. Apply for Job");
-                System.out.println("3. View Applied Jobs");
-                System.out.println("4. Exit");
+                System.out.println("\nWhat would you like to do?");
+                System.out.println("1. Search jobs");
+                System.out.println("2. Apply for a job");
+                System.out.println("3. View applied jobs");
+                System.out.println("4. View profile");
+                System.out.println("5. Exit");
+
                 int choice = scanner.nextInt();
                 scanner.nextLine(); // Consume newline
 
-                if (choice == 1) {
-                    System.out.print("Enter keyword: ");
-                    String keyword = scanner.nextLine();
-                    jobSeeker.searchJobs(keyword, jobDatabase);
-                } else if (choice == 2) {
-                    System.out.print("Enter job title to apply for: ");
-                    String title = scanner.nextLine().trim();
-                    boolean jobFound = false;
-
-                    for (Job job : jobDatabase) {
-                        if (job.getTitle().equalsIgnoreCase(title)) {
-                            jobSeeker.applyForJob(job);
-                            jobFound = true;
-                            break;
+                switch (choice) {
+                    case 1:
+                        System.out.print("Enter a keyword to search jobs: ");
+                        String keyword = scanner.nextLine();
+                        jobSeeker.searchJobs(keyword, jobDatabase);
+                        break;
+                    case 2:
+                        System.out.print("Enter job title to apply for: ");
+                        String jobTitle = scanner.nextLine();
+                        boolean jobFound = false;
+                        for (Job job : jobDatabase) {
+                            if (job.getTitle().equalsIgnoreCase(jobTitle)) {
+                                jobSeeker.applyForJob(job);
+                                jobFound = true;
+                                break;
+                            }
                         }
-                    }
-
-                    if (!jobFound) {
-                        System.out.println("Job not found! Please check the job title and try again.");
-                    }
-                } else if (choice == 3) {
-                    jobSeeker.viewAppliedJobs();
-                } else {
-                    break;
+                        if (!jobFound) {
+                            System.out.println("Job not found!");
+                        }
+                        break;
+                    case 3:
+                        jobSeeker.viewAppliedJobs();
+                        break;
+                    case 4:
+                        jobSeeker.displayUserDetails();
+                        break;
+                    case 5:
+                        System.out.println("Exiting... Thank you for using the Job Portal!");
+                        return;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
                 }
             }
         } else if (userType == 2) {
