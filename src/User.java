@@ -3,14 +3,13 @@ public abstract class User {
     private String password;
     private String email;
 
-    // Constructor
+
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
     }
 
-    // Getters and Setters
     public String getUsername() {
         return username;
     }
@@ -35,6 +34,6 @@ public abstract class User {
         this.email = email;
     }
 
-    // Abstract method for displaying user details
+
     public abstract void displayUserDetails();
 }
